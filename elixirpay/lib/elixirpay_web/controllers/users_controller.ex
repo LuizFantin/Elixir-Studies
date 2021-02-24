@@ -3,22 +3,16 @@ defmodule ElixirpayWeb.UsersController do
 
   alias Elixirpay.User
 
+  #Define o fallback controller responsável por lidar com os erros
+  action_fallback ElixirpayWeb.FallbackController
+
   def create(conn, params) do
-    params
-    |> Elixirpay.create_user()
-    |> handle_response(conn)
-  end
-
-  defp handle_response({:ok, %User{} = user}, conn) do
-    conn
-    |> put_status(:created)
-    |> render("created.json", user: user)
-  end
-
-  defp handle_response({:error, result}, conn) do
-    conn
-    |> put_status(:bad_request)
-    |> put_view(ElixirpayWeb.ErrorView)
-    |> render("400.json", result: result)
+    #Testa se o retorno da função é ok e user, se for, chama o escopo da função
+    #Se tiver erro, chama o fallback controller
+    with {:ok, %User{} = user} <- Elixirpay.create_user(params) do
+      conn
+      |> put_status(:created)
+      |> render("created.json", user: user)
+    end
   end
 end

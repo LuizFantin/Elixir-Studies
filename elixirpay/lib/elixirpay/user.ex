@@ -3,6 +3,7 @@ defmodule Elixirpay.User do
   import Ecto.Changeset
 
   alias Ecto.Changeset
+  alias Elixirpay.Account
 
   #Seta a chave primária no ID e UUID
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -18,6 +19,7 @@ defmodule Elixirpay.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :nickname, :string
+    has_one :account, Account
 
     timestamps()
   end

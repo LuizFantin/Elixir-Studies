@@ -13,6 +13,12 @@ defmodule ElixirpayWeb.Router do
 
     #Rota post para criar um usuário
     post "/users", UsersController, :create
+
+    #Rota post para depositar numa conta
+    post "/accounts/:id/deposit", AccountsController, :deposit
+
+    #Rota post para sacar de uma conta
+    post "/accounts/:id/withdraw", AccountsController, :withdraw
   end
 
   # Enables LiveDashboard only for development
