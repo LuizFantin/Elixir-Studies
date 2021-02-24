@@ -8,8 +8,10 @@ defmodule ElixirpayWeb.Router do
   scope "/api", ElixirpayWeb do
     pipe_through :api
 
+    #Rota get para abrir um arquivo csv com numeros e somá-los
     get "/:filename", WelcomeController, :index
 
+    #Rota post para criar um usuário
     post "/users", UsersController, :create
   end
 

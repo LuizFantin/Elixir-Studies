@@ -4,10 +4,13 @@ defmodule Elixirpay.User do
 
   alias Ecto.Changeset
 
+  #Seta a chave primária no ID e UUID
   @primary_key {:id, :binary_id, autogenerate: true}
 
+  #Define quais parametros são obrigatórios no request
   @required_params [:name, :age, :email, :password, :nickname]
 
+  #Cria o schema (uma espécie da Model) de Usuário e linka com a tabela no banco
   schema "users" do
     field :name, :string
     field :age, :integer
@@ -31,9 +34,11 @@ defmodule Elixirpay.User do
     |> put_password_hash()
   end
 
+  #Faz o hash do campo "password" e coloca no campo "password_hash"
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Pbkdf2.add_hash(password))
   end
 
+  #Trata o erro retornando o changeset
   defp put_password_hash(changeset), do: changeset
 end
