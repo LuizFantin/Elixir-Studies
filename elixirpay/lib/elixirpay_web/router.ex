@@ -19,6 +19,9 @@ defmodule ElixirpayWeb.Router do
 
     #Rota post para sacar de uma conta
     post "/accounts/:id/withdraw", AccountsController, :withdraw
+
+    #Rota post para transação entre contas
+    post "/accounts/transaction", AccountsController, :transaction
   end
 
   # Enables LiveDashboard only for development
