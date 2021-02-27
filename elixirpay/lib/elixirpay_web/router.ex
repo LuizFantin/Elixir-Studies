@@ -1,8 +1,14 @@
 defmodule ElixirpayWeb.Router do
   use ElixirpayWeb, :router
 
+  import Plug.BasicAuth
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug :basic_auth, Application.compile_env(:elixirpay, :basic_auth)
   end
 
   scope "/api", ElixirpayWeb do
@@ -13,6 +19,10 @@ defmodule ElixirpayWeb.Router do
 
     #Rota post para criar um usuário
     post "/users", UsersController, :create
+  end
+
+  scope "/api", ElixirpayWeb do
+    pipe_through [:api, :auth]
 
     #Rota post para depositar numa conta
     post "/accounts/:id/deposit", AccountsController, :deposit

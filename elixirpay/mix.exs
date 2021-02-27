@@ -10,7 +10,14 @@ defmodule Elixirpay.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -46,6 +53,7 @@ defmodule Elixirpay.MixProject do
       {:decimal, "~> 2.0"},
       {:pbkdf2_elixir, "~> 1.3"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~>0.10", only: :test}
     ]
   end
 
